@@ -33,3 +33,10 @@ is treated as an address literal, never re-parsed as a host name.
 function in `socket`, so injecting a fake for it must be done by
 patching the module rather than through the constructor. The
 constructor only controls the forward-resolution path.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
